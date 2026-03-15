@@ -4,8 +4,7 @@
 
 ## Architecture Diagram
 
-[![View Diagram](https://excalidraw.com/)](https://excalidraw.com/)  
-*Click the link above to view or edit the architecture diagram on Excalidraw*
+
 
 Conceptual diagram:
 ```
