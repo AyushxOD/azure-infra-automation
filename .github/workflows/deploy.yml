@@ -6,26 +6,33 @@ on:
 
 jobs:
   terraform:
+    name: 'Terraform'
     runs-on: ubuntu-latest
+    
+    # ADD THIS LINE: This tells GitHub to "cd terraform" before running commands
+    defaults:
+      run:
+        working-directory: ./terraform 
+
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: HashiCorp - Setup Terraform
+    - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
 
     - name: Terraform Init
       run: terraform init
-      env:
-        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
-    - name: Terraform Plan & Apply
+    - name: Terraform Plan
+      run: terraform plan
+
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main'
       run: terraform apply -auto-approve
-      env:
-        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
