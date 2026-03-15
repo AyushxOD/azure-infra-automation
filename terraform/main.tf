@@ -53,7 +53,7 @@ resource "azurerm_linux_virtual_machine" "main" {
 
   admin_ssh_key {
     username   = "azureuser"
-    public_key = file("~/.ssh/azure_id_rsa.pub")
+    public_key = var.ssh_public_key # Change this line
   }
 
   os_disk {
