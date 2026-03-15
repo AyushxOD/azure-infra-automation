@@ -84,7 +84,6 @@ resource "azurerm_network_security_group" "main" {
   }
 }
 
-# 2. Link the NSG to your Network Interface
 resource "azurerm_network_interface_security_group_association" "main" {
   network_interface_id      = azurerm_network_interface.main.id
   network_security_group_id = azurerm_network_security_group.main.id
